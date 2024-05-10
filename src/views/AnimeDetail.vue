@@ -1,8 +1,9 @@
 <template>
   <div v-if="anime">
     <!-- Banner -->
-    <div class="banner bg-cover bg-center h-60 lg:h-96" :style="{ backgroundImage: `url(${anime.bannerImage})` }">
-      <div class="flex justify-center items-center h-full">
+    <div class="relative banner h-60 lg:h-96" :style="{ backgroundImage: `url(${anime.bannerImage || '/public/img/banner.png'})` }">
+      <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      <div class="flex justify-center items-center h-full relative">
         <div class="bg-black bg-opacity-50 px-4 py-2 rounded">
           <h1 class="text-white text-2xl lg:text-4xl font-bold">{{ anime.title.romaji }}</h1>
         </div>
@@ -21,19 +22,19 @@
     <!-- Relations Section -->
     <div class="relations-container max-w-5xl mx-auto mt-8 p-8 bg-white shadow-lg rounded-lg">
       <h2 class="text-xl font-semibold mb-4">Relations</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         <div class="relation-card" v-for="relation in anime.relations.edges" :key="relation.node.id" @click="goToMediaDetail(relation.node.id, relation.node.type)">
           <img :src="relation.node.coverImage.large" :alt="relation.node.title.romaji" class="w-full h-40 object-cover rounded-lg">
           <div class="text-center mt-2">{{ relation.node.title.romaji }}</div>
         </div>
       </div>
     </div>
-
   </div>
   <div v-else class="loading text-center p-20">
     Loading...
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
