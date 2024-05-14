@@ -5,7 +5,7 @@
     </div>
 
     <div class="search-container p-6 mx-auto max-w-7xl">
-      <input type="text" v-model="searchQuery" @input="searchAnime" placeholder="Buscar anime..." class="w-full px-4 py-2 text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+      <input type="text" v-model="searchQuery" @input="debouncedSearch" placeholder="Buscar manga..." class="w-full px-4 py-2 text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
 
       <div class="anime-grid mt-6 grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         <div class="anime-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" v-for="anime in searchResults" :key="anime.id" @click="goToAnimeDetail(anime.id)" style="height: 100%;">
@@ -24,6 +24,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { debounce } from '../debounce.js'; // Importa la función debounce
 
 // La barra de búsqueda inicia vacía.
 const searchQuery = ref('');
@@ -98,7 +99,7 @@ const fetchAnime = (searchText) => {
 const searchAnime = () => {
   if (searchQuery.value.trim() === '') {
     // Si la barra de búsqueda está vacía, mostrar el contenido predeterminado
-    fetchAnime('Dragon Ball'); // Aquí puedes cambiar 'One Piece' por lo que desees mostrar por defecto
+    fetchAnime('Dragon Ball');
   } else {
     // Realizar la búsqueda basada en la entrada del usuario
     fetchAnime(searchQuery.value);
@@ -110,8 +111,11 @@ const goToAnimeDetail = (id) => {
   router.push({ name: 'MangaDetail', params: { id } });
 };
 
+// Crear una función debounced para la búsqueda
+const debouncedSearch = debounce(searchAnime, 300);
+
 // Cargar el conjunto de resultados predeterminados al montar el componente
 onMounted(() => {
-  fetchAnime('Dragon Ball'); //
+  fetchAnime('Dragon Ball');
 });
 </script>
