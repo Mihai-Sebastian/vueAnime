@@ -175,7 +175,7 @@ export default {
       } finally {
         this.isSearching = false;
       }
-    }, 300) 
+    }, 300)
   },
   mounted() {
     const router = useRouter();
