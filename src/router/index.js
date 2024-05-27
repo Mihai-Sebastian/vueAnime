@@ -5,6 +5,7 @@ import Manga from "@/views/Manga.vue";
 import Home from "@/views/Home.vue";
 import AnimeDetail from "@/views/AnimeDetail.vue";
 import MangaDetail from "@/views/MangaDetail.vue";
+import UserDetail from "@/views/UserDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,7 +37,12 @@ const router = createRouter({
       component: MangaDetail,
       props: true
     },
-
+    {
+      path: '/user/:id',
+      name: 'UserDetail',
+      component: UserDetail,
+      props: true
+    },
   ]
 })
 

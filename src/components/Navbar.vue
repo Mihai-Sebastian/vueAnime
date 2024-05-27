@@ -10,7 +10,7 @@
 
       <!-- Logo o títol de la barra de navegació -->
       <div class="flex justify-between items-center">
-        <h1 class="py-4 text-2xl font-bold">ICONA</h1>
+        <h1 class="py-4 text-2xl font-bold">ANILIST</h1>
         <div class="hidden md:flex space-x-6">
           <!-- Enllaços de navegació desktop -->
           <router-link to="/" class="flex items-center text-lg font-semibold hover:text-blue-200 transition-colors duration-300 ease-in-out">
@@ -47,7 +47,7 @@
       <div v-if="searchResults.anime.length" class="anime-results">
         <h3 class="px-4 py-2 text-lg">Anime</h3>
         <ul>
-          <li v-for="anime in searchResults.anime" :key="anime.id" class="p-2 hover:bg-gray-700 flex items-center">
+          <li v-for="anime in searchResults.anime" :key="anime.id" class="p-2 hover:bg-gray-700 flex items-center" @click="goToDetail(anime.id, 'ANIME')">
             <img :src="anime.coverImage.medium" alt="Cover" class="inline-block h-10 w-10 rounded-full mr-2">
             {{ anime.title.userPreferred }}
           </li>
@@ -56,7 +56,7 @@
       <div v-if="searchResults.manga.length" class="manga-results">
         <h3 class="px-4 py-2 text-lg">Manga</h3>
         <ul>
-          <li v-for="manga in searchResults.manga" :key="manga.id" class="p-2 hover:bg-gray-700 flex items-center">
+          <li v-for="manga in searchResults.manga" :key="manga.id" class="p-2 hover:bg-gray-700 flex items-center" @click="goToDetail(manga.id, 'MANGA')">
             <img :src="manga.coverImage.medium" alt="Cover" class="inline-block h-10 w-10 rounded-full mr-2">
             {{ manga.title.userPreferred }}
           </li>
@@ -65,7 +65,7 @@
       <div v-if="searchResults.users.length" class="user-results">
         <h3 class="px-4 py-2 text-lg">Users</h3>
         <ul>
-          <li v-for="user in searchResults.users" :key="user.id" class="p-2 hover:bg-gray-700 flex items-center">
+          <li v-for="user in searchResults.users" :key="user.id" class="p-2 hover:bg-gray-700 flex items-center" @click="goToUserDetail(user.id)">
             <img :src="user.avatar.medium" alt="User" class="inline-block h-10 w-10 rounded-full mr-2">
             {{ user.name }}
           </li>
@@ -74,10 +74,9 @@
     </div>
   </div>
 </template>
+
 <script>
 import axios from 'axios';
-import { computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import { debounce } from '../debounce.js'; // Importa la función debounce
 
 export default {
@@ -175,10 +174,17 @@ export default {
       } finally {
         this.isSearching = false;
       }
-    }, 300)
+    }, 300),
+    goToDetail(id, type) {
+      const routeName = type === 'ANIME' ? 'AnimeDetail' : 'MangaDetail';
+      this.$router.push({ name: routeName, params: { id } });
+    },
+    goToUserDetail(userId) {
+      this.$router.push({ name: 'UserDetail', params: { id: userId } });
+    }
   },
   mounted() {
-    const router = useRouter();
+    const router = this.$router;
     router.afterEach(() => {
       this.searchQuery = '';
       this.searchResults = {
