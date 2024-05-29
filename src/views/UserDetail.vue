@@ -14,7 +14,6 @@
       <div class="flex flex-col lg:flex-row gap-4">
         <img :src="user.avatar.large" :alt="`Avatar of ${user.name}`" class="avatar-image w-full lg:w-1/4 max-h-80 rounded-lg">
         <div class="flex flex-col p-4 lg:w-3/4">
-          <!-- Afegeix una presentació més visual -->
           <div class="text-gray-700 text-base leading-relaxed">
             <p><strong>Username:</strong> {{ user.name }}</p>
 
@@ -54,10 +53,6 @@ const animeLists = ref([]);
 onMounted(() => {
   fetchUserDetail();
   fetchAnimeList();
-});
-
-onUnmounted(() => {
-  // Clean up or reset styles if necessary
 });
 
 watch(() => route.params.id, (newId, oldId) => {

@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <!-- Relations Section -->
+    <!-- Relations -->
     <div class="relations-container max-w-5xl mx-auto mt-8 p-8 bg-white shadow-lg rounded-lg">
       <h2 class="text-xl font-semibold mb-4">Relations</h2>
       <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -45,10 +45,6 @@ const anime = ref(null);
 
 onMounted(() => {
   fetchAnimeDetail();
-});
-
-onUnmounted(() => {
-  // Clean up or reset styles if necessary
 });
 
 watch(() => route.params.id, (newId, oldId) => {

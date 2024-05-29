@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- Contingut de la pàgina -->
-
     <!-- Footer -->
     <footer class="bg-indigo-500 text-white">
       <div class="container mx-auto px-4 py-8">

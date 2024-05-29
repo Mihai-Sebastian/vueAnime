@@ -24,7 +24,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { debounce } from '../debounce.js'; // Assegura't que la ruta sigui correcta
+import { debounce } from '../debounce.js';
 
 // La barra de búsqueda inicia vacía.
 const searchQuery = ref('');

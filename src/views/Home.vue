@@ -27,5 +27,4 @@
 </template>
 
 <style>
-/* Aquí pots afegir estils globals o ajustar els estils específics si és necessari */
 </style>
